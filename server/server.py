@@ -1,5 +1,6 @@
 import json
 import threading
+from multiprocessing import Process
 import time
 from datetime import datetime
 import os.path
@@ -7,7 +8,8 @@ from flask import Flask, request  # python-flask
 
 app = Flask(__name__)
 db_file = __file__.replace(".py", "") + "_db.json"
-
+app_end = False
+server = None
 
 @app.route('/', methods=["GET"])
 def index():
@@ -49,7 +51,7 @@ def ip():
 
 
 def date_checker():
-    while True:
+    while not app_end:
         data = None
         names_to_pop = []
         with open(db_file, 'r') as file:
@@ -70,6 +72,16 @@ def date_checker():
         with open(db_file, 'w') as file:
             json.dump(data, file)
         time.sleep(20)
+    print("date_checker END")
+
+
+def command_listener():
+    global app_end
+    while not app_end:
+        command = input()
+        if command == "quit":
+            app_end = True
+    print("command_listener END")
 
 
 if __name__ == '__main__':
@@ -77,7 +89,14 @@ if __name__ == '__main__':
         with open(db_file, 'w') as file:
             file.write("{}")
 
-    check = threading.Thread(target=date_checker, args=())
-    check.start()
+    date_checker = threading.Thread(target=date_checker, args=())
+    command_listener = threading.Thread(target=command_listener, args=())
+    date_checker.start()
+    command_listener.start()
 
     app.run(host='0.0.0.0')
+    # server = Process(target=app.run, args=(host='0.0.0.0',))
+    # server.start()
+
+    # server.terminate()
+    # server.join()
