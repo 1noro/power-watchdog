@@ -1,3 +1,4 @@
+import sys
 import json
 import threading
 from multiprocessing import Process
@@ -10,6 +11,7 @@ app = Flask(__name__)
 db_file = __file__.replace(".py", "") + "_db.json"
 app_end = False
 server = None
+date_checker_thread = None
 
 @app.route('/', methods=["GET"])
 def index():
@@ -50,7 +52,7 @@ def ip():
     return request.remote_addr, 200
 
 
-def date_checker():
+def date_checker_func():
     while not app_end:
         data = None
         names_to_pop = []
@@ -75,12 +77,14 @@ def date_checker():
     print("date_checker END")
 
 
-def command_listener():
+def command_listener_func():
     global app_end
     while not app_end:
         command = input()
         if command == "quit":
             app_end = True
+            date_checker_thread.join()
+            # sys.exit(0)
     print("command_listener END")
 
 
@@ -89,10 +93,10 @@ if __name__ == '__main__':
         with open(db_file, 'w') as file:
             file.write("{}")
 
-    date_checker = threading.Thread(target=date_checker, args=())
-    command_listener = threading.Thread(target=command_listener, args=())
-    date_checker.start()
-    command_listener.start()
+    date_checker_thread = threading.Thread(target=date_checker_func, args=())
+    command_listener_thread = threading.Thread(target=command_listener_func, args=())
+    date_checker_thread.start()
+    command_listener_thread.start()
 
     app.run(host='0.0.0.0')
     # server = Process(target=app.run, args=(host='0.0.0.0',))
