@@ -1,5 +1,6 @@
 # Added by 1noro
 *_db.json
+#.idea/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
