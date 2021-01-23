@@ -87,6 +87,9 @@ def command_listener_func():
             # sys.exit(0)
     print("command_listener END")
 
+# https://stackoverflow.com/questions/31264826/start-a-flask-application-in-separate-thread
+def run_flask_func():
+    app.run(host='0.0.0.0')
 
 if __name__ == '__main__':
     if not os.path.exists(db_file):
@@ -98,7 +101,7 @@ if __name__ == '__main__':
     date_checker_thread.start()
     command_listener_thread.start()
 
-    app.run(host='0.0.0.0')
+    
     # server = Process(target=app.run, args=(host='0.0.0.0',))
     # server.start()
 
