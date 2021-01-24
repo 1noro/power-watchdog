@@ -93,7 +93,7 @@ if __name__ == '__main__':
 
     app.run(host='0.0.0.0')
 
-    print("finnishing program")
+    print("[info] waiting for all threads to end")
     app_end = True
     date_checker_thread.join()
     print("program finnished")

@@ -85,13 +85,16 @@ def main(argv):
             if "name" in info and "server" in info and "port" in info:
                 thread_pool.append(threading.Thread(target=pinger, args=(info["name"], info["server"], info["port"])))
 
-    print('[info] write "quit" for exit')
+    print('[info] write "quit" or press "Ctrl+C" for exit')
 
     for thread in thread_pool:
         thread.start()
 
     while True:
-        command = input()
+        try:
+            command = input()
+        except KeyboardInterrupt:
+            command = 'quit'
         if command == 'quit':
             app_end = True
             break
