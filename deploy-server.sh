@@ -29,4 +29,4 @@ cp "$UNIT_TEMPLATE" "$UNIT_LOCATION"
 sed -i "s/@ROLE@/$ROLE/" "$UNIT_LOCATION"
 sed -i "s/@USERNAME@/$USERNAME/" "$UNIT_LOCATION"
 
-# systemctl enable --now $SERVICE_NAME
+systemctl enable --now $SERVICE_NAME
