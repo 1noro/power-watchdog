@@ -78,7 +78,7 @@ def date_checker_func():
         with open(db_file, 'w') as file:
             json.dump(data, file)
         
-        time.sleep(20)
+        time.sleep(10)
 
     print("date_checker END")
 
@@ -93,6 +93,7 @@ if __name__ == '__main__':
 
     app.run(host='0.0.0.0')
 
-    print("finnishing programm")
+    print("finnishing program")
     app_end = True
     date_checker_thread.join()
+    print("program finnished")
