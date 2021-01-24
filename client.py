@@ -3,6 +3,7 @@
 import sys, getopt, threading, requests, time, json
 import os.path
 
+
 config_file = 'config.json'
 app_end = False
 thread_pool = []
@@ -34,8 +35,12 @@ def load_config():
 
 def pinger(name, server, port):
     while not app_end:
-        print("ping from {} to {}:{}".format(name, server, port))
-        time.sleep(5)
+        url = "http://{}:{}/ping/{}".format(server, port, name)
+        # response = requests.post(url = url)
+        _ = requests.post(url = url)
+        print("[ -> ]", url)
+        # print("[ <- ]\n", response.text)
+        time.sleep(20) # 20 segundos
     print("{} to {}:{} thread END".format(name, server, port))
 
 
@@ -69,7 +74,7 @@ def main(argv):
     # print('ping_server:', ping_server)
     # print('server_port:', server_port)
 
-    if machine_name is None or ping_server is None:
+    if machine_name is None or ping_server is None or server_port is None:
         print(help_str)
         sys.exit()
     else:
