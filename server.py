@@ -70,7 +70,7 @@ def date_checker_func():
                 if difference_min > 10080: # una semana
                     print("[----]\t{}\t({})".format(data[name]["ip"], name))
                     names_to_pop.append(name)
-                elif difference_min > 3:
+                elif difference_min > 3: # 3 minutos
                     print("[FAIL]\t{}\t({})".format(data[name]["ip"], name))
                     data[name]["active"] = False
         for name in names_to_pop:
