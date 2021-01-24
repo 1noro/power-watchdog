@@ -14,7 +14,7 @@ read -p "Type the name of an existing user to be the one to run the service: " U
 #     exit
 # fi
 
-ROLE="server"
+ROLE="client"
 OPT_FOLDER="/opt/power-watchdog"
 UNIT_TEMPLATE="power-watchdog-template.service"
 SERVICE_NAME="power-watchdog-$ROLE.service"

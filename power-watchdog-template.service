@@ -1,12 +1,14 @@
 [Unit]
-Description=power-watchdog #ROLE# service
+Description=power-watchdog @ROLE@ service
 After=network.target
-# StartLimitIntervalSec=0[Service]
+StartLimitIntervalSec=0
+
+[Service]
 Type=simple
 Restart=always
 RestartSec=1
-User=#USERNAME#
-ExecStart=/usr/bin/python /opt/power-watchdog/#ROLE#.py
+User=@USERNAME@
+ExecStart=/usr/bin/python /opt/power-watchdog/@ROLE@.py
 
 [Install]
 WantedBy=multi-user.target
