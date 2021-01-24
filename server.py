@@ -1,17 +1,21 @@
-import sys
+#!/usr/bin/python
+
+import os
 import json
 import threading
-from multiprocessing import Process
 import time
+
+from multiprocessing import Process
 from datetime import datetime
-import os.path
 from flask import Flask, request  # python-flask
+
 
 app = Flask(__name__)
 db_file = __file__.replace(".py", "") + "_db.json"
 app_end = False
 server = None
 date_checker_thread = None
+
 
 @app.route('/', methods=["GET"])
 def index():
@@ -73,23 +77,11 @@ def date_checker_func():
             data.pop(name, None)
         with open(db_file, 'w') as file:
             json.dump(data, file)
+        
         time.sleep(20)
+
     print("date_checker END")
 
-
-def command_listener_func():
-    global app_end
-    while not app_end:
-        command = input()
-        if command == "quit":
-            app_end = True
-            date_checker_thread.join()
-            # sys.exit(0)
-    print("command_listener END")
-
-# https://stackoverflow.com/questions/31264826/start-a-flask-application-in-separate-thread
-def run_flask_func():
-    app.run(host='0.0.0.0')
 
 if __name__ == '__main__':
     if not os.path.exists(db_file):
@@ -97,13 +89,10 @@ if __name__ == '__main__':
             file.write("{}")
 
     date_checker_thread = threading.Thread(target=date_checker_func, args=())
-    command_listener_thread = threading.Thread(target=command_listener_func, args=())
     date_checker_thread.start()
-    command_listener_thread.start()
 
-    
-    # server = Process(target=app.run, args=(host='0.0.0.0',))
-    # server.start()
+    app.run(host='0.0.0.0')
 
-    # server.terminate()
-    # server.join()
+    print("finnishing programm")
+    app_end = True
+    date_checker_thread.join()
