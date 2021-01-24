@@ -30,3 +30,6 @@ sed -i "s/@ROLE@/$ROLE/" "$UNIT_LOCATION"
 sed -i "s/@USERNAME@/$USERNAME/" "$UNIT_LOCATION"
 
 systemctl enable --now $SERVICE_NAME
+
+echo "in ubuntu"
+echo "sudo apt install python-is-python3"
