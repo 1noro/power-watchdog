@@ -1,0 +1,17 @@
+{
+    "default_name": "computer1",
+    "default_server": "ping.a3do.net",
+    "default_port": 5000,
+    "extra_servers": [
+        {
+            "name": "computer1",
+            "server": "ping2.a3do.net",
+            "port": 5000
+        },
+        {
+            "name": "computer1",
+            "server": "ping3.a3do.net",
+            "port": 5000
+        }
+    ]
+}
