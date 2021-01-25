@@ -6,6 +6,7 @@ if [ "$EUID" -ne 0 ]
 fi
 
 read -p "Type the name of an existing user to be the one to run the service: " USERNAME
+read -p "Type the name of the python interpreter on your pc (python/python3): " PYTHON_CMD
 
 # if id "$1" &>/dev/null; then
 #     echo '[INFO] user found'
@@ -28,10 +29,10 @@ chown $USERNAME:$USERNAME "$OPT_FOLDER"
 cp "$UNIT_TEMPLATE" "$UNIT_LOCATION"
 sed -i "s/@ROLE@/$ROLE/" "$UNIT_LOCATION"
 sed -i "s/@USERNAME@/$USERNAME/" "$UNIT_LOCATION"
+sed -i "s/@PYTHON_CMD@/$PYTHON_CMD/" "$UNIT_LOCATION"
 
 systemctl enable --now $SERVICE_NAME
 
-echo "in ubuntu"
-echo "sudo apt install python-is-python3 python3-flask"
-echo "in arch"
-echo "sudo apt install python-flask"
+echo "you need to install: python-flask"
+echo "example:"
+echo "sudo apt install $PYTHON_CMD-flask"

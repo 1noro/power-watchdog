@@ -8,7 +8,7 @@ Type=simple
 Restart=always
 RestartSec=1
 User=@USERNAME@
-ExecStart=/usr/bin/python /opt/power-watchdog/@ROLE@.py
+ExecStart=/usr/bin/@PYTHON_CMD@ /opt/power-watchdog/@ROLE@.py
 
 [Install]
 WantedBy=multi-user.target
